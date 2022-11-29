@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Bizmart</string>
+
+    <string-array name="category_list">
+        <item>Food</item>
+        <item>Travel</item>
+        <item>Home</item>
+        <item>Photography</item>
+        <item>Real Estate</item>
+    </string-array>
+
+
+    <string name="item1">Food</string>
+    <string name="item2">Travel</string>
+    <string name="item3">Technology</string>
+    <string name="item4">Agriculture</string>
+    <string name="item5">Photography</string>
+    <string name="item6">Real estate</string>
+    <string name="item7">Finance</string>
+    <string name="item8">Sport</string>
+    <string name="item9">Fashion</string>
+    <string name="item10">Insurance</string>
+
+    <string name="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet</string>
+
+</resources>
