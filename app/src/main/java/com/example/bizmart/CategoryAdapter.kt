@@ -11,11 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 class CategoryAdapter(private val context: Context?, private val mList: List<category_data>) :
     RecyclerView.Adapter<CategoryAdapter.ItemViewHolder>() {
 
-    class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-        val textView: TextView = view.findViewById(R.id.category_label)
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout =
@@ -27,11 +23,11 @@ class CategoryAdapter(private val context: Context?, private val mList: List<cat
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = mList[position]
         val context = holder.itemView.context
-        val intent = Intent(context, BusinessPage::class.java)
+        val intent = Intent(context, CategoryList::class.java)
 
-        intent.putExtra("title", holder.textView.text.toString())
         holder.textView.text = context?.resources?.getString(item.text)
         holder.itemView.setOnClickListener {
+            intent.putExtra("category", holder.textView.text.toString())
             context.startActivity(intent)
         }
 
@@ -40,6 +36,12 @@ class CategoryAdapter(private val context: Context?, private val mList: List<cat
 
     override fun getItemCount(): Int {
         return mList.size
+    }
+
+    class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+
+        val textView: TextView = view.findViewById(R.id.category_label)
+
     }
 
 

@@ -26,6 +26,7 @@ class FragmentHolder : AppCompatActivity(R.layout.fragment_holder) {
 
                 R.id.home -> {
                     replaceFragment(Home())
+
                     return@setOnItemSelectedListener true
                }
               R.id.category -> {
@@ -53,6 +54,8 @@ class FragmentHolder : AppCompatActivity(R.layout.fragment_holder) {
     private fun replaceFragment(fragment: Fragment) {
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.setReorderingAllowed(true)
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 
