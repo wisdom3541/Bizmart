@@ -113,7 +113,7 @@ class CategoryList : AppCompatActivity() {
                                 data.clear()
                                 data.addAll(list)
                                 adapter.notifyDataSetChanged()
-                                 loadingPage.visibility = View.INVISIBLE
+                                 loadingPage.visibility = View.GONE
                             }
                         }
                 }

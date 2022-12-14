@@ -28,11 +28,16 @@ class FragmentHolder : AppCompatActivity(R.layout.fragment_holder) {
                     replaceFragment(Home())
 
                     return@setOnItemSelectedListener true
-               }
-              R.id.category -> {
-                replaceFragment(Category())
+                }
+                R.id.category -> {
+                    replaceFragment(Category())
                     return@setOnItemSelectedListener true
-            }
+                }
+
+                R.id.profile -> {
+                    replaceFragment(Profile())
+                    return@setOnItemSelectedListener true
+                }
 
                 else -> {
                     replaceFragment(Home())
@@ -47,8 +52,8 @@ class FragmentHolder : AppCompatActivity(R.layout.fragment_holder) {
 //                    }
 //            }
 
-            }
         }
+    }
 
 
     private fun replaceFragment(fragment: Fragment) {

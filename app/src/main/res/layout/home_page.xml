@@ -1,131 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="10dp"
+    android:paddingBottom="70dp"
     android:background="#Fffdd0"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_above="@+id/bottomNavigation"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="#Fffdd0"
+    android:padding="10dp">
 
 
-        <TextView
-            android:id="@+id/tit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="BIZMART"
-            android:gravity="center"
-            android:textColor="#FF6200EE"
-            android:layout_marginTop="20dp"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/tit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="BIZMART"
+        android:textColor="#FF6200EE"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
-        </TextView>
+    </TextView>
 
 
-        <TextView
-            android:id="@+id/titsub"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Search through our catalog of product and services.... "
-            android:textSize="13dp"
-            android:gravity="center"
-            android:textColor="#000"
-            android:layout_marginTop="5dp"
-            android:textStyle="italic|bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tit">
+    <TextView
+        android:id="@+id/titsub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Search through our catalog of product and services.... "
+        android:textColor="#000"
+        android:textSize="13dp"
+        android:textStyle="italic|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tit">
 
 
-        </TextView>
+    </TextView>
 
-        <TextView
-            android:id="@+id/category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="Categories"
-            android:textColor="#000"
-            android:textSize="25dp"
-            android:layout_marginTop="30dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titsub">
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="start"
+        android:text="Categories"
+        android:textColor="#000"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titsub">
 
-        </TextView>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/category_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#Fffdd0"
-            android:padding="5dp"
-            android:scrollbars="none"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/category"
-            app:layout_constraintBottom_toTopOf="@id/textView2"
-            tools:itemCount="1"
-            tools:listitem="@layout/design">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="start"
-            android:text="Popular"
-            android:textColor="#000"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/category_view">
-
-        </TextView>
+    </TextView>
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#Fffdd0"
+        android:padding="5dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category"
+        tools:itemCount="1"
+        tools:listitem="@layout/design">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/product_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#Fffdd0"
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView2"
-            tools:itemCount="3"
-            tools:listitem="@layout/design2">
+    </androidx.recyclerview.widget.RecyclerView>
 
-        </androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="start"
+        android:text="Popular"
+        android:textColor="#000"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_view">
 
-
-        <ImageView
-            android:id="@+id/loadingPage"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:background="#fff"
-            android:scaleType="center"
-            android:src="@drawable/logo"
-            android:visibility="visible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView2"
-            >
+    </TextView>
 
 
-        </ImageView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/product_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#Fffdd0"
+        android:nestedScrollingEnabled="true"
+        android:padding="5dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2"
+        tools:itemCount="6"
+        tools:listitem="@layout/design2">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.recyclerview.widget.RecyclerView>
 
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

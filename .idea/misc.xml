@@ -11,9 +11,10 @@
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/design.xml" value="0.25" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/design2.xml" value="0.33" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/design3.xml" value="0.33" />
-        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/fragment_holder.xml" value="0.15" />
-        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/home_page.xml" value="0.22" />
-        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/signin.xml" value="0.25" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/fragment_holder.xml" value="0.33" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/home_page.xml" value="0.18" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/profile.xml" value="0.25" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/signin.xml" value="0.33" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/signup.xml" value="0.22" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/signup_signin.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/splash_screen.xml" value="0.33" />
@@ -30,7 +31,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.16" />
+        <option name="scale" value="0.18" />
       </ProjectState>
     </option>
   </component>

@@ -1,17 +1,21 @@
 package com.example.bizmart
 
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bizmart.homeAdapter.CustomAdapter
 import com.example.bizmart.homeAdapter.ProductCustomAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -25,9 +29,55 @@ class Home : Fragment(R.layout.home_page) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         //calling views method
         categoryView()
         productView()
+
+        //back pressed handler
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d("TAG", "Fragment back pressed invoked")
+
+                    // Do custom work here
+                    val builder = AlertDialog.Builder(context)
+                    //set title for alert dialog
+                    builder.setTitle("Log out")
+                    //set message for alert dialog
+                    builder.setMessage("Do you want to log out? ")
+                    builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+                    //performing positive action
+                    builder.setPositiveButton("Yes") { _, _ ->
+                        Toast.makeText(context, "Logging Out...", Toast.LENGTH_LONG).show()
+                        signOut()
+                        activity?.finish()
+                    }
+                    //performing cancel action
+//                    builder.setNeutralButton("Cancel") { _, _ ->
+//                        Toast.makeText(
+//                            context,
+//                            "clicked cancel\n operation cancel",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                    }
+                    //performing negative action
+                    builder.setNegativeButton("No") { _, _ ->
+                        //do Nothing
+                       // Toast.makeText(context, "clicked No", Toast.LENGTH_LONG).show()
+                    }
+                    // Create the AlertDialog
+                    val alertDialog: AlertDialog = builder.create()
+                    // Set other dialog properties
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
+                    // if you want onBackPressed() to be called as normal afterwards
+                }
+            }
+            )
+        //end back pressed handler
 
     }
 
@@ -35,9 +85,9 @@ class Home : Fragment(R.layout.home_page) {
         val recyclerview = view?.findViewById<RecyclerView>(R.id.category_view)
 
         //this creates a horinzontal layout manager
-        val horizontalLayoutManagaer =
+        val horizontalLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerview?.layoutManager = horizontalLayoutManagaer
+        recyclerview?.layoutManager = horizontalLayoutManager
 
 
         // ArrayList of class ItemsViewModel
@@ -58,30 +108,24 @@ class Home : Fragment(R.layout.home_page) {
 
         // Setting the Adapter with the recyclerview
         recyclerview?.adapter = adapter
+
+
     }
 
 
     private fun productView() {
         val recyclerview = view?.findViewById<RecyclerView>(R.id.product_view)
+
+
         // this creates a vertical layout Manager
-        recyclerview?.layoutManager = LinearLayoutManager(view?.context)
+        val verticalLayoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerview?.layoutManager = verticalLayoutManager
 
         // ArrayList of class ItemsViewModel
 
 
         // This loop will create the category views
-        for (i in 1..10) {
-            data2.add(
-                data2(
-                    R.drawable.photography_img,
-                    "Bizmart",
-                    "An E-directory for Products and Sercvices",
-                    3F
-                )
-            )
-        }
-
-
 
 
         // Setting the Adapter with the recyclerview
@@ -96,7 +140,7 @@ class Home : Fragment(R.layout.home_page) {
 
     private fun getData() {
 
-        val loading = view?.findViewById<ImageView>(R.id.loadingPage)
+        //val loading = view?.findViewById<ImageView>(R.id.loadingPage)
 
         val ref = db.collection("popular")
         val list = ArrayList<data2>()
@@ -131,14 +175,28 @@ class Home : Fragment(R.layout.home_page) {
                                 data2.clear()
                                 data2.addAll(list)
                                 adapter.notifyDataSetChanged()
-                                loading?.visibility = View.INVISIBLE
+
+
+                                //   loading?.visibility = View.GONE
                             }
                         }
                 }
+
             }
             .addOnFailureListener { exception ->
                 Log.d("TAG", "get failed with ", exception)
             }
     }
 
+
+    private fun signOut() {
+
+        FirebaseAuth.getInstance().signOut()
+        val intent = Intent(context, SignIn::class.java)
+        startActivity(intent)
+    }
+
+
 }
+
+
