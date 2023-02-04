@@ -4,9 +4,12 @@ package com.example.bizmart
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -14,10 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bizmart.homeAdapter.CustomAdapter
 import com.example.bizmart.homeAdapter.ProductCustomAdapter
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 
 
 class Home : Fragment(R.layout.home_page) {
@@ -25,6 +31,11 @@ class Home : Fragment(R.layout.home_page) {
     private val db = Firebase.firestore
     private val data2 = ArrayList<data2>()
     private val adapter = ProductCustomAdapter(data2)
+    private val storageRef = Firebase.storage.reference
+    private lateinit var img : ImageView
+    val oneMb: Long = 1024 * 1024
+    private lateinit var image: StorageReference
+    private lateinit var dataImg : Bitmap
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,6 +44,9 @@ class Home : Fragment(R.layout.home_page) {
         //calling views method
         categoryView()
         productView()
+
+        img= view.findViewById<ImageView>(R.id.loading)
+        img.visibility= View.VISIBLE
 
         //back pressed handler
         requireActivity()
@@ -52,6 +66,7 @@ class Home : Fragment(R.layout.home_page) {
                     //performing positive action
                     builder.setPositiveButton("Yes") { _, _ ->
                         Toast.makeText(context, "Logging Out...", Toast.LENGTH_LONG).show()
+                        Snackbar.make(view, "Logging Out...", Snackbar.LENGTH_SHORT).show()
                         signOut()
                         activity?.finish()
                     }
@@ -84,7 +99,7 @@ class Home : Fragment(R.layout.home_page) {
     private fun categoryView() {
         val recyclerview = view?.findViewById<RecyclerView>(R.id.category_view)
 
-        //this creates a horinzontal layout manager
+        //this creates a horizontal layout manager
         val horizontalLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerview?.layoutManager = horizontalLayoutManager
@@ -111,7 +126,6 @@ class Home : Fragment(R.layout.home_page) {
 
 
     }
-
 
     private fun productView() {
         val recyclerview = view?.findViewById<RecyclerView>(R.id.product_view)
@@ -156,25 +170,45 @@ class Home : Fragment(R.layout.home_page) {
                         .addOnSuccessListener { document ->
                             if (document != null) {
                                 val n = document.data?.get("name").toString()
-                                val r = document.data?.get("rating").toString()?.toFloat()
+                                val r = document.data?.get("rating").toString().toFloat()
                                 val d = document.data?.get("description").toString()
-                                Log.d("TAG", n)
+                                val cat =  document.data?.get("category").toString()
+                                Log.d("TAG", cat)
+                                val catT = cat.lowercase().filter { !it.isWhitespace() }
+                                Log.d("TAG", catT)
+                                loadImg(catT, id)
 
-                                //passing result to new list
-                                list.add(
-                                    data2(
-                                        R.drawable.photography_img,
-                                        n,
-                                        d,
-                                        r
+                                //load bitmap
+                                //passing result to the image for the adapter
+                                image.getBytes(oneMb).addOnSuccessListener {
+                                    // Data for "images reference" is returned, use this as needed
+                                    dataImg = BitmapFactory.decodeByteArray(it,0, it.size)
+
+                                    //passing result to new list
+                                    list.add(
+                                        data2(
+                                            dataImg,
+                                            n,
+                                            d,
+                                            r
+                                        )
                                     )
-                                )
 
-                                Log.d("TAG data", list.toString())
-                                //clearing the placeholder data and feeding it the result from the Database
-                                data2.clear()
-                                data2.addAll(list)
-                                adapter.notifyDataSetChanged()
+                                    Log.d("TAG data", list.toString())
+                                    //clearing the placeholder data and feeding it the result from the Database
+                                    data2.clear()
+                                    data2.addAll(list)
+                                    adapter.notifyDataSetChanged()
+                                    img.visibility = View.GONE
+
+
+                                }.addOnFailureListener {
+                                    Log.d("Tag E: ", it.toString())
+                                    // Handle any errors
+                                }
+
+
+
 
 
                                 //   loading?.visibility = View.GONE
@@ -188,6 +222,17 @@ class Home : Fragment(R.layout.home_page) {
             }
     }
 
+    private fun loadImg(c: String, i: String) {
+
+        //val c =  category.lowercase().filter { !it.isWhitespace() }
+        // val i =  id.lowercase().filter { !it.isWhitespace() }
+        val image1 = "$c/$i.jpeg"
+        Log.d("tag", image1)
+        image = storageRef.child(image1)
+//        Category = db.collection("bizmart").document("categories")
+//            .collection(category.lowercase().filter { !it.isWhitespace() })
+//        Log.d("idTAG", "category: $Category")
+    }
 
     private fun signOut() {
 

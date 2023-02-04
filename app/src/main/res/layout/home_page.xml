@@ -122,6 +122,19 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <ImageView
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/logo"
+        android:scaleType="center"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@id/product_view"
+        app:layout_constraintStart_toStartOf="@id/product_view"
+        app:layout_constraintTop_toTopOf="@id/product_view">
+
+    </ImageView>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

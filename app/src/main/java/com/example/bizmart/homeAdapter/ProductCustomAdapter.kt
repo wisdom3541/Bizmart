@@ -47,7 +47,7 @@ class ProductCustomAdapter(private val mList: List<data2>) :
         }
 
         // sets the image to the imageview from our itemHolder class
-        holder.imageView.setImageResource(item.image)
+        holder.imageView.setImageBitmap(item.image)
 
         // sets the text to the textview from our itemHolder class
         holder.textView.text = item.text

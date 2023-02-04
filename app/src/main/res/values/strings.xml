@@ -4,20 +4,33 @@
     <string-array name="category_list">
         <item>Food</item>
         <item>Travel</item>
-        <item>Home</item>
+        <item>Real Estate</item>
         <item>Photography</item>
         <item>Real Estate</item>
     </string-array>
 
-<!--    <integer-array name="drawables">-->
-<!--        <item>R.drawable.food</item>-->
-<!--        <item>R.drawable.travel</item>-->
-<!--        <item>R.drawable.home</item>-->
-<!--        <item>R.drawable.photography</item>-->
-<!--        <item>R.drawable.realestate</item>-->
+    <!--    <integer-array name="drawables">-->
+    <!--        <item>R.drawable.food</item>-->
+    <!--        <item>R.drawable.travel</item>-->
+    <!--        <item>R.drawable.home</item>-->
+    <!--        <item>R.drawable.photography</item>-->
+    <!--        <item>R.drawable.realestate</item>-->
 
 
-<!--    </integer-array>-->
+    <!--    </integer-array>-->
+
+    <string-array name="spinner_list">
+        <item>Food</item>
+        <item>Travel</item>
+        <item>Fashion</item>
+        <item>Photography</item>
+        <item>Technology</item>
+        <item>Agriculture</item>
+        <item>Real Estate</item>
+        <item>Finance</item>
+        <item>Sport</item>
+        <item>Insurance</item>
+    </string-array>
 
 
     <string name="item1">Food</string>
@@ -37,5 +50,6 @@
 
 
     <string name="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

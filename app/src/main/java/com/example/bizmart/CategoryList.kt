@@ -1,6 +1,8 @@
 package com.example.bizmart
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,6 +17,8 @@ import com.example.bizmart.homeAdapter.CategoryListAdapter
 import com.example.bizmart.homeAdapter.ProductCustomAdapter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 
 class CategoryList : AppCompatActivity() {
 
@@ -25,7 +29,11 @@ class CategoryList : AppCompatActivity() {
     private lateinit var loadingPage: ImageView
     private lateinit var adapter: CategoryListAdapter
     private lateinit var data: ArrayList<Data3>
-    lateinit var category : String
+    private lateinit var image: StorageReference
+    private lateinit var dataImg : Bitmap
+    lateinit var category: String
+    private val storageRef = Firebase.storage.reference
+    val oneMb: Long = 1024 * 1024
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,14 +79,12 @@ class CategoryList : AppCompatActivity() {
         getData()
 
 
-
-
-
     }
 
     private fun getData() {
 
-        val ref = db.collection("bizmart").document("categories").collection(category.lowercase().filter { !it.isWhitespace() })
+        val ref = db.collection("bizmart").document("categories")
+            .collection(category.lowercase().filter { !it.isWhitespace() })
         val list = ArrayList<Data3>()
 
         ref.get()
@@ -92,28 +98,44 @@ class CategoryList : AppCompatActivity() {
                         .addOnSuccessListener { document ->
                             if (document != null) {
                                 val n = document.data?.get("name").toString()
-                                val r = document.data?.get("rating").toString()?.toFloat()
+                                val r = document.data?.get("rating").toString().toFloat()
                                 val d = document.data?.get("description").toString()
-                                Log.d("TAG", n)
+                                val cat = document.data?.get("category").toString()
+                                val catT = cat.lowercase().filter { !it.isWhitespace() }
+                                Log.d("TAG", catT)
+                                loadImg(catT, id)
 
-                                //passing result to new list
-                                list.add(
-                                    Data3(
-                                        R.drawable.photography_img,
-                                        n,
-                                        d,
-                                        r,
-                                        category
+                                //load bitmap
+                                //passing result to the image for the adapter
+                                image.getBytes(oneMb).addOnSuccessListener {
+                                    // Data for "images reference" is returned, use this as needed
+                                   dataImg = BitmapFactory.decodeByteArray(it,0, it.size)
 
+                                    //passing result to new list
+                                    list.add(
+                                        Data3(
+                                            dataImg ,
+                                            n,
+                                            d,
+                                            r,
+                                            category
+
+                                        )
                                     )
-                                )
 
-                                Log.d("TAG data", list.toString())
-                                //clearing the placeholder data and feeding it the result from the Database
-                                data.clear()
-                                data.addAll(list)
-                                adapter.notifyDataSetChanged()
-                                 loadingPage.visibility = View.GONE
+                                    Log.d("TAG data", list.toString())
+                                    //clearing the placeholder data and feeding it the result from the Database
+                                    data.clear()
+                                    data.addAll(list)
+                                    adapter.notifyDataSetChanged()
+                                    loadingPage.visibility = View.GONE
+                                }.addOnFailureListener {
+                                    Log.d("Tag E: ", it.toString())
+                                    // Handle any errors
+                                }
+
+
+
                             }
                         }
                 }
@@ -121,6 +143,18 @@ class CategoryList : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d("TAG", "get failed with ", exception)
             }
+    }
+
+    private fun loadImg(c: String, i: String) {
+
+        //val c =  category.lowercase().filter { !it.isWhitespace() }
+        // val i =  id.lowercase().filter { !it.isWhitespace() }
+        val image1 = "$c/$i.jpeg"
+        Log.d("tag", image1)
+        image = storageRef.child(image1)
+//        Category = db.collection("bizmart").document("categories")
+//            .collection(category.lowercase().filter { !it.isWhitespace() })
+//        Log.d("idTAG", "category: $Category")
     }
 
     companion object {

@@ -22,7 +22,7 @@
         <ImageView
             android:id="@+id/business_image"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="400dp"
             android:src="@drawable/logo"
             android:scaleType="center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -164,28 +164,8 @@
             </Button>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/review"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="30dp"
-                android:hint="Write a Review"
-                style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
-                android:padding="1dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phoneNum">
 
-                <com.google.android.material.textfield.TextInputEditText
-                   android:id="@+id/review_EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="#000"
-                    android:gravity="bottom"
-                    android:inputType="text">
 
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/rate"
@@ -198,21 +178,68 @@
                 android:textColor="#000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/review">
+                app:layout_constraintTop_toBottomOf="@id/phoneNum">
 
             </TextView>
 
             <RatingBar
+                android:id="@+id/ratingBar3"
                 style="@style/Widget.AppCompat.RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:rating="0"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rate">
 
             </RatingBar>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/review"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:hint="Write a Review"
+                style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+                android:padding="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ratingBar3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/review_EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:gravity="bottom"
+                    android:inputType="textMultiLine">
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="send"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/review"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="10dp">
+
+            </Button>
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

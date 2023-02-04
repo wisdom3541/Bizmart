@@ -1,6 +1,7 @@
 package com.example.bizmart.homeAdapter
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +45,8 @@ class CategoryListAdapter(private val mList: List<Data3>) :
         }
 
         // sets the image to the imageview from our itemHolder class
-        holder.imageView.setImageResource(item.image)
+
+        holder.imageView.setImageBitmap(item.image)
 
         // sets the text to the textview from our itemHolder class
         holder.textView.text = item.text

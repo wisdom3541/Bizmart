@@ -15,32 +15,38 @@ class FragmentHolder : AppCompatActivity(R.layout.fragment_holder) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        bottomNav = findViewById(R.id.bottomNavigation)
+
         if (savedInstanceState == null) {
             replaceFragment(Home())
+            bottomNav.menu.getItem(1).isChecked = true
         }
 
-        bottomNav = findViewById(R.id.bottomNavigation)
+
 
         bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
 
                 R.id.home -> {
                     replaceFragment(Home())
-
+                    it.isChecked = true
                     return@setOnItemSelectedListener true
                 }
                 R.id.category -> {
                     replaceFragment(Category())
+                    it.isChecked = true
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.profile -> {
                     replaceFragment(Profile())
+                    it.isChecked = true
                     return@setOnItemSelectedListener true
                 }
 
                 else -> {
                     replaceFragment(Home())
+                    it.isChecked = true
                     return@setOnItemSelectedListener true
                 }
             }

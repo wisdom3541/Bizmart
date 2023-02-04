@@ -3,21 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/business_page.xml" value="0.22963951935914553" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/activity_maps.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/add_business.xml" value="0.24157303370786518" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/business_page.xml" value="0.33" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/button_nav_items.xml" value="0.21041666666666667" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/category_design.xml" value="0.18" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/category_page.xml" value="0.18" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/category_page_list.xml" value="0.25" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/design.xml" value="0.25" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/design2.xml" value="0.33" />
-        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/design3.xml" value="0.33" />
-        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/fragment_holder.xml" value="0.33" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/design3.xml" value="0.25" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/fragment_holder.xml" value="0.25" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/home_page.xml" value="0.18" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/profile.xml" value="0.25" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/signin.xml" value="0.33" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/signup.xml" value="0.22" />
-        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/signup_signin.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/splash_screen.xml" value="0.33" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/signup_signin.xml" value="0.25" />
+        <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/splash_screen.xml" value="0.22" />
         <entry key="..\:/Users/koli/AndroidStudioProjects/Bizmart/app/src/main/res/layout/test.xml" value="0.22447916666666667" />
       </map>
     </option>

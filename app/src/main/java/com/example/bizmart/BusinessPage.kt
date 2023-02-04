@@ -3,6 +3,7 @@ package com.example.bizmart
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Address
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import com.example.bizmart.databinding.BusinessPageBinding
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 
 class BusinessPage : AppCompatActivity() {
@@ -24,6 +26,7 @@ class BusinessPage : AppCompatActivity() {
     private lateinit var id: String
     private lateinit var category: String
     private lateinit var Category : CollectionReference
+    private lateinit var businessImage : StorageReference
     private val storageRef = Firebase.storage.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +76,7 @@ class BusinessPage : AppCompatActivity() {
         val aboutUs = binding.businessInfo
         val rating = binding.ratingBar
 
-        val image = storageRef.child("food/chickenrepublic.jpeg")
+
 
         //val islandRef = storageRef.child("images/island.jpg")
 
@@ -87,10 +90,16 @@ class BusinessPage : AppCompatActivity() {
 
 
         if(category == "null") {
+
             Category = db.collection("popular")
             Log.d("idTAG", "Category: $Category")
 
         }else{
+            val c =  category.lowercase().filter { !it.isWhitespace() }
+            val i =  id.lowercase().filter { !it.isWhitespace() }
+            val image = "$c/$i.jpeg"
+            Log.d("tag", image)
+            businessImage = storageRef.child(image)
             Category = db.collection("bizmart").document("categories")
                 .collection(category.lowercase().filter { !it.isWhitespace() })
             Log.d("idTAG", "category: $Category")
@@ -119,9 +128,28 @@ class BusinessPage : AppCompatActivity() {
                         Log.d("TAG5", r)
                         rating.rating = r.toFloat()
 
+                        val n = dataList?.get("name").toString()
+                        val address1 = dataList?.get("address").toString()
+                        val phone1 = dataList?.get("phone").toString()
+                        val des = dataList?.get("description").toString()
+                        val aboutUs1 = dataList?.get("aboutUs").toString()
+                        val i2 =  id.lowercase().filter { !it.isWhitespace() }
+
+
+
+
+                        //loading img for when businessPage is called from home
+                        if(category == "null"){
+                            val cat1 =  c.lowercase().filter { !it.isWhitespace() }
+                            val i =  id.lowercase().filter { !it.isWhitespace() }
+                            val image = "$cat1/$i.jpeg"
+                            businessImage = storageRef.child(image)
+
+                        }
+
                         //getting img before setting View
-                        image.getBytes(ONE_MEGABYTE).addOnSuccessListener {
-                            // Data for "images/island.jpg" is returned, use this as needed
+                        businessImage.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+                            // Data for "image" is returned
                             binding.businessImage.scaleType = ImageView.ScaleType.FIT_XY
                             binding.businessImage.setImageBitmap(byteArrayToBitmap(it))
                         }.addOnFailureListener {
@@ -163,6 +191,29 @@ class BusinessPage : AppCompatActivity() {
 
         const val ID = "title"
         const val CATEGORY = "category"
+
+    }
+
+    private fun loadDB(id : String,n: String, cat : String, rat : Float, address: String ,phone: String,description: String,aboutUs: String) {
+        val db = Firebase.firestore
+
+        val data = hashMapOf(
+            "name" to n,
+            "category" to cat,
+            "rating" to rat,
+            "address" to address,
+            "phone" to phone,
+            "description" to description,
+            "aboutUs" to aboutUs
+        )
+
+        val category = db.collection("popular")
+
+        // Add a new document with an ID specifies
+        category.document(id).set(data)
+
+            //for loading...call method
+        //loadDB(i2,n,c,rat.toFloat(),address1,phone1,des,aboutUs1)
 
     }
 }

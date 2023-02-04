@@ -60,6 +60,8 @@
             android:padding="5dp"
             android:text="An E-directory for Products and Sercvices"
             android:textColor="#000"
+            android:gravity="start|center"
+            android:minLines="3"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_category_image" />

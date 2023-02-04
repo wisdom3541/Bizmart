@@ -1,4 +1,6 @@
 package com.example.bizmart
 
-data class data2(val image: Int, val text: String, val description: String, val rating: Float) {
+import android.graphics.Bitmap
+
+data class data2(val image: Bitmap, val text: String, val description: String, val rating: Float) {
 }
