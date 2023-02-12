@@ -11,12 +11,23 @@ import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.bizmart.data.Values
 import com.example.bizmart.databinding.BusinessPageBinding
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlin.math.ln
+import kotlin.properties.Delegates
 
 class BusinessPage : AppCompatActivity() {
 
@@ -28,6 +39,12 @@ class BusinessPage : AppCompatActivity() {
     private lateinit var Category : CollectionReference
     private lateinit var businessImage : StorageReference
     private val storageRef = Firebase.storage.reference
+    private lateinit var bAddress : String
+    private var lat : Double = 0.0
+    private var lng : Double = 0.0
+    private lateinit var addy: String
+    private lateinit var fAddy: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,19 +56,29 @@ class BusinessPage : AppCompatActivity() {
         Log.d("cat correct: ", category)
 
 
+
+
         getData()
 
-        binding.address.setOnClickListener {
+        binding.mapImage.setOnClickListener {
 
-            val text = binding.address.text
-            val gmmIntentUri =
-                Uri.parse("geo:0,0?q=1600 $text")
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            if (mapIntent.resolveActivity(packageManager) != null) {
-                startActivity(mapIntent)
 
-            }
+            Log.d("latlng", lat.toString() + lng.toString())
+            val intent = Intent(this, MapsActivity::class.java)
+            intent.putExtra("lat", lat)
+            intent.putExtra("lng", lng)
+            intent.putExtra("address",bAddress)
+            startActivity(intent)
+
+//            val text = binding.address.text
+//            val gmmIntentUri =
+//                Uri.parse("geo:0,0?q=1600 $text")
+//            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+//            mapIntent.setPackage("com.google.android.apps.maps")
+//            if (mapIntent.resolveActivity(packageManager) != null) {
+//                startActivity(mapIntent)
+//
+//            }
         }
 
         binding.phoneNum.setOnClickListener {
@@ -129,11 +156,16 @@ class BusinessPage : AppCompatActivity() {
                         rating.rating = r.toFloat()
 
                         val n = dataList?.get("name").toString()
-                        val address1 = dataList?.get("address").toString()
-                        val phone1 = dataList?.get("phone").toString()
-                        val des = dataList?.get("description").toString()
-                        val aboutUs1 = dataList?.get("aboutUs").toString()
-                        val i2 =  id.lowercase().filter { !it.isWhitespace() }
+                        bAddress = dataList?.get("address").toString()
+
+                        //reverse geocoding
+                        editAddress(bAddress)
+                        getLatLng()
+
+//                        val phone1 = dataList?.get("phone").toString()
+//                        val des = dataList?.get("description").toString()
+//                        val aboutUs1 = dataList?.get("aboutUs").toString()
+//                        val i2 =  id.lowercase().filter { !it.isWhitespace() }
 
 
 
@@ -168,10 +200,6 @@ class BusinessPage : AppCompatActivity() {
                     }
                 } else {
                     Log.d("TAG", "No such document")
-//                    val intent = Intent(this, CategoryList::class.java)
-//                    intent.putExtra("title", id)
-//                    Log.d("TAG error ID correct? :", id)
-//                    startActivity(intent)
                 }
 
 
@@ -187,6 +215,42 @@ class BusinessPage : AppCompatActivity() {
         return BitmapFactory.decodeByteArray(data, 0, data.size)
     }
 
+    private fun getLatLng(){
+
+        val quotesApi = RetrofitHelper.getInstance().create(GeocodingApi::class.java)
+
+        // launching a new coroutine
+        GlobalScope.launch {
+            val result = quotesApi.reposList(fAddy)
+            if (result != null) {
+                // Checking the results
+
+                val value : Values? =  result.body()?.results?.get(0)
+                lat = value?.geometry?.location?.lat!!
+                lng = value.geometry.location.lng
+
+                Log.d(
+                    "Size: ", value.toString() + lat + lng
+
+                )
+            }
+
+        }
+
+    }
+
+    private fun editAddress(ad: String) {
+        addy = ad.replace("\\s+".toRegex(), "%20").toLowerCase();
+        addy = addy.replace("\\.".toRegex(), "").toLowerCase();
+        addy = addy.replace(",".toRegex(), "").toLowerCase();
+        Log.d("Addy :", addy)
+
+
+        fAddy = "maps/api/geocode/json?address=$addy&key=${BuildConfig.MAPS_API_KEY}"
+
+        Log.d("Addy :", fAddy)
+    }
+
     companion object {
 
         const val ID = "title"
@@ -194,28 +258,8 @@ class BusinessPage : AppCompatActivity() {
 
     }
 
-    private fun loadDB(id : String,n: String, cat : String, rat : Float, address: String ,phone: String,description: String,aboutUs: String) {
-        val db = Firebase.firestore
 
-        val data = hashMapOf(
-            "name" to n,
-            "category" to cat,
-            "rating" to rat,
-            "address" to address,
-            "phone" to phone,
-            "description" to description,
-            "aboutUs" to aboutUs
-        )
 
-        val category = db.collection("popular")
-
-        // Add a new document with an ID specifies
-        category.document(id).set(data)
-
-            //for loading...call method
-        //loadDB(i2,n,c,rat.toFloat(),address1,phone1,des,aboutUs1)
-
-    }
 }
 
 

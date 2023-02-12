@@ -112,10 +112,10 @@ class Home : Fragment(R.layout.home_page) {
         val res: Resources = resources
 
         data.add(data1(R.drawable.food, "Food"))
-        data.add(data1(R.drawable.home, "Home"))
         data.add(data1(R.drawable.travel, "Travel"))
         data.add(data1(R.drawable.photography, "Photography"))
         data.add(data1(R.drawable.realestate, "Real Estate"))
+        data.add(data1(R.drawable.finance, "Finance"))
 
 
         // This will pass the ArrayList to our Adapter
