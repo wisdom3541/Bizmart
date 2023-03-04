@@ -25,27 +25,8 @@ class SignupSignin : AppCompatActivity() {
 
         binding.signINBTN.setOnClickListener { signIn() }
 
-        binding.signUpBTN.setOnClickListener { signUp()}
+        binding.signUpBTN.setOnClickListener { signUp() }
 
-        val userInfo = Firebase.auth.currentUser
-        userInfo?.let {
-            // Name, email address, and profile photo Url
-            val name = userInfo.displayName
-            val email = userInfo.email
-            val photoUrl = userInfo.photoUrl
-
-            // Check if user's email is verified
-            //val emailVerified = userInfo.isEmailVerified
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getToken() instead.
-            val uid = userInfo.uid
-
-            Log.d("Info", name.toString() + email.toString() + uid)
-
-
-        }
 
     }
 
@@ -59,39 +40,6 @@ class SignupSignin : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-    private fun testDB() {
-        val db = Firebase.firestore
-
-        val data = hashMapOf(
-            "name" to "Chicken Republic",
-            "category" to "food",
-            "rating" to 5,
-            "address" to "22 Rd, Festac Town",
-            "phone" to "080 9016 5926",
-            "description" to "A 5 - star fast food Restaurant",
-            "aboutUs" to "Chicken Republic is a proudly Nigerian brand that comes from humble beginnings. We opened our first Chicken Republic restaurant in Lagos in 2004 and are presently trading in over 150 locations across Nigeria and Ghana, with plans to operate 430 restaurants by the end of 2024. Chicken Republic is a committed supporter of Nigerian production. Most of our products are sourced directly from local, Nigerian suppliers. Our philosophy is “People Capability Always”. We pride ourselves on being an equal opportunity employer, with a strong focus on creating opportunities for women and young adults."
-
-        )
-
-        val category = db.collection("popular")
-
-        // Add a new document with a ID specifies
-        category.document("chickenrepublic").set(data)
-        //category.collection("photography").document("apexphotostudios").set(data);
-
-
-    }
-
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if(currentUser != null){
-           // reload();
-            val intent = Intent(this, FragmentHolder::class.java)
-            startActivity(intent)
-        }
-    }
-
 }
+
+

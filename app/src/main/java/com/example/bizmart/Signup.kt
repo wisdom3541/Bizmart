@@ -1,6 +1,7 @@
 package com.example.bizmart
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bizmart.databinding.SignupBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -48,8 +50,17 @@ class Signup : AppCompatActivity() {
     }
 
     private fun signUp() {
-        create()
 
+        if (binding.firstnameEditText.text.isNullOrEmpty() || binding.lastnameEditText.text.isNullOrEmpty() || binding.emailEditText.text.isNullOrEmpty() || binding.passwordEditText.text.isNullOrEmpty()) {
+
+            val bar =
+                Snackbar.make(binding.root, "Please Fill in All Details", Snackbar.LENGTH_SHORT)
+            bar.setBackgroundTint(Color.RED)
+            bar.show()
+        }else {
+            create()
+
+        }
     }
 
 
