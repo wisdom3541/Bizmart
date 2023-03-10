@@ -1,5 +1,6 @@
 package com.example.bizmart
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -11,9 +12,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.bizmart.databinding.ProfileBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
@@ -25,6 +28,7 @@ class Profile : Fragment(R.layout.profile) {
     private lateinit var title: TextView
     private lateinit var editProfile: Button
     private lateinit var addBusiness: Button
+    private lateinit var logout : Button
     private val user = Firebase.auth.currentUser
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,6 +38,7 @@ class Profile : Fragment(R.layout.profile) {
         email = view.findViewById(R.id.email) as EditText
         title = view.findViewById(R.id.title) as TextView
         editProfile = view.findViewById(R.id.edit) as Button
+        logout = view.findViewById(R.id.logoutBtn) as Button
         addBusiness =  view.findViewById(R.id.addBusinessBTN) as Button
 
         addBusiness.setOnClickListener {
@@ -53,6 +58,39 @@ class Profile : Fragment(R.layout.profile) {
 
         }
 
+
+        logout.setOnClickListener { val builder = AlertDialog.Builder(context)
+            //set title for alert dialog
+            builder.setTitle("Log out")
+            //set message for alert dialog
+            builder.setMessage("Do you want to log out? ")
+            builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+            //performing positive action
+            builder.setPositiveButton("Yes") { _, _ ->
+                Toast.makeText(context, "Logging Out...", Toast.LENGTH_LONG).show()
+                Snackbar.make(view, "Logging Out...", Snackbar.LENGTH_SHORT).show()
+                signOut()
+                activity?.finish()
+            }
+            //performing cancel action
+//                    builder.setNeutralButton("Cancel") { _, _ ->
+//                        Toast.makeText(
+//                            context,
+//                            "clicked cancel\n operation cancel",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                    }
+            //performing negative action
+            builder.setNegativeButton("No") { _, _ ->
+                //do Nothing
+                // Toast.makeText(context, "clicked No", Toast.LENGTH_LONG).show()
+            }
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show() }
 
     }
 
@@ -118,5 +156,12 @@ class Profile : Fragment(R.layout.profile) {
 
         }
 
+    }
+
+    private fun signOut() {
+
+        FirebaseAuth.getInstance().signOut()
+        val intent = Intent(context, SignIn::class.java)
+        startActivity(intent)
     }
 }

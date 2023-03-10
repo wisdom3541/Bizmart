@@ -33,28 +33,28 @@
 
             </TextView>
 
+
             <ImageView
                 android:id="@+id/profilePic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/profilepics"
+                android:layout_marginTop="36dp"
                 android:padding="20dp"
-                android:layout_marginTop="30dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/profilepics"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                >
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title">
 
 
             </ImageView>
-
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
                 android:padding="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profilePic">
@@ -173,6 +173,7 @@
                 </TextView>
 
                 <Button
+                    android:id="@+id/dummyMail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -185,6 +186,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView3">
 
                 </Button>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logoutBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="Log out"
+                    android:backgroundTint="#b23b3b"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dummyMail">
+
+                </com.google.android.material.button.MaterialButton>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

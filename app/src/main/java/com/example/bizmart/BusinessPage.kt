@@ -90,6 +90,11 @@ class BusinessPage : AppCompatActivity() {
             }
         }
 
+        binding.back.setOnClickListener{ onBackPressed() }
+
+
+
+
 
     }
 
@@ -257,7 +262,6 @@ class BusinessPage : AppCompatActivity() {
         const val CATEGORY = "category"
 
     }
-
 
 
 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -26,6 +27,8 @@ class CategoryAdapter(private val context: Context?, private val mList: List<cat
         val intent = Intent(context, CategoryList::class.java)
 
         holder.textView.text = context?.resources?.getString(item.text)
+        holder.icons.setImageResource(item.icon)
+
         holder.itemView.setOnClickListener {
             intent.putExtra("category", holder.textView.text.toString())
             context.startActivity(intent)
@@ -41,6 +44,7 @@ class CategoryAdapter(private val context: Context?, private val mList: List<cat
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         val textView: TextView = view.findViewById(R.id.category_label)
+        val icons : ImageView =  view.findViewById(R.id.category_icon)
 
     }
 

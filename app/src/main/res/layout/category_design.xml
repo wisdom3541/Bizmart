@@ -24,6 +24,19 @@
 
         </TextView>
 
+        <ImageView
+            android:id="@+id/category_icon"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/foodicon"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+
+        </ImageView>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

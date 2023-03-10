@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +32,7 @@ class CategoryList : AppCompatActivity() {
     private lateinit var data: ArrayList<Data3>
     private lateinit var image: StorageReference
     private lateinit var dataImg : Bitmap
+    private lateinit var back : ImageButton
     lateinit var category: String
     private val storageRef = Firebase.storage.reference
     val oneMb: Long = 1024 * 1024
@@ -44,6 +46,7 @@ class CategoryList : AppCompatActivity() {
 
         recyclerview = findViewById(R.id.categoryList_recyclerView)
         loadingPage = findViewById(R.id.loadingPage)
+        back = findViewById(R.id.back)
 
         recyclerview.layoutManager = LinearLayoutManager(this)
 
@@ -77,6 +80,8 @@ class CategoryList : AppCompatActivity() {
 
 
         getData()
+
+       back.setOnClickListener{ onBackPressed() }
 
 
     }

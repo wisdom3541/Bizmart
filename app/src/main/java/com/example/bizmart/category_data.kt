@@ -1,3 +1,5 @@
 package com.example.bizmart
 
-data class category_data(val text : Int)
+import android.widget.ImageView
+
+data class category_data(val text : Int, val icon : Int)

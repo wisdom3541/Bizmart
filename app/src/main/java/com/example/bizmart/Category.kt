@@ -16,7 +16,7 @@ class Category : Fragment(R.layout.category_page) {
         val data = Datasource().loadText()
         val recyclerView = view.findViewById<RecyclerView>(R.id.category_recycleView)
 
-        recyclerView?.adapter = CategoryAdapter(context, data)
+        recyclerView?.adapter = CategoryAdapter(context,data)
         recyclerView?.setHasFixedSize(true)
 
     }
