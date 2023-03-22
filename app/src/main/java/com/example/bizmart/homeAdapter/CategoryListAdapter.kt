@@ -13,7 +13,7 @@ import com.example.bizmart.BusinessPage
 import com.example.bizmart.R
 import com.example.bizmart.data.Data3
 
-class CategoryListAdapter(private val mList: List<Data3>) :
+class CategoryListAdapter(private var mList: List<Data3>) :
     RecyclerView.Adapter<CategoryListAdapter.ViewHolder>() {
 
     // create new views
@@ -69,6 +69,12 @@ class CategoryListAdapter(private val mList: List<Data3>) :
         val rating: RatingBar = itemView.findViewById(R.id.ratingBar2)
         val cat : TextView = itemView.findViewById(R.id.cat)
 
+
+    }
+
+    fun setFilteredList(mList : List<Data3>){
+        this.mList = mList
+        notifyDataSetChanged()
 
     }
 }

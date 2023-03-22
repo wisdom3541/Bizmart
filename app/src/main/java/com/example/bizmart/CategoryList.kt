@@ -6,10 +6,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +17,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CategoryList : AppCompatActivity() {
 
@@ -30,10 +29,12 @@ class CategoryList : AppCompatActivity() {
     private lateinit var loadingPage: ImageView
     private lateinit var adapter: CategoryListAdapter
     private lateinit var data: ArrayList<Data3>
+    private lateinit var list: ArrayList<Data3>
     private lateinit var image: StorageReference
     private lateinit var dataImg : Bitmap
     private lateinit var back : ImageButton
     lateinit var category: String
+    lateinit var searchBox : SearchView
     private val storageRef = Firebase.storage.reference
     val oneMb: Long = 1024 * 1024
 
@@ -46,6 +47,8 @@ class CategoryList : AppCompatActivity() {
 
         recyclerview = findViewById(R.id.categoryList_recyclerView)
         loadingPage = findViewById(R.id.loadingPage)
+        searchBox = findViewById(R.id.search)
+
         back = findViewById(R.id.back)
 
         recyclerview.layoutManager = LinearLayoutManager(this)
@@ -84,13 +87,49 @@ class CategoryList : AppCompatActivity() {
        back.setOnClickListener{ onBackPressed() }
 
 
+        //SearchView
+        searchBox.clearFocus()
+        searchBox.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterText(newText)
+                return true
+            }
+
+        })
+
+    }
+
+    private fun filterText(query: String?) {
+
+        if(query != null){
+            val filteredList = ArrayList<Data3>()
+            for (i in list){
+
+                if (i.text.lowercase(Locale.ROOT).contains(query)){
+                    filteredList.add(i)
+                }
+
+            }
+
+            if (filteredList.isEmpty()){
+                Toast.makeText(this, "No Business found....", Toast.LENGTH_SHORT).show()
+            }else{
+
+                adapter.setFilteredList(filteredList)
+            }
+        }
+
     }
 
     private fun getData() {
 
         val ref = db.collection("bizmart").document("categories")
             .collection(category.lowercase().filter { !it.isWhitespace() })
-        val list = ArrayList<Data3>()
+         list = ArrayList<Data3>()
 
         ref.get()
             .addOnSuccessListener { result ->
