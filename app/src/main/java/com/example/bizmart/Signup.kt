@@ -4,7 +4,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -51,14 +53,21 @@ class Signup : AppCompatActivity() {
 
     private fun signUp() {
 
+        val validEmail = isValidEmail(binding.emailEditText.text.toString())
+
         if (binding.firstnameEditText.text.isNullOrEmpty() || binding.lastnameEditText.text.isNullOrEmpty() || binding.emailEditText.text.isNullOrEmpty() || binding.passwordEditText.text.isNullOrEmpty()) {
 
             val bar =
                 Snackbar.make(binding.root, "Please Fill in All Details", Snackbar.LENGTH_SHORT)
             bar.setBackgroundTint(Color.RED)
             bar.show()
-        }else {
+        } else if (validEmail) {
             create()
+        } else {
+            val bar =
+                Snackbar.make(binding.root, "Please Enter A Valid E-mail Address", Snackbar.LENGTH_SHORT)
+            bar.setBackgroundTint(Color.RED)
+            bar.show()
 
         }
     }
@@ -129,6 +138,10 @@ class Signup : AppCompatActivity() {
                     updateUI(null)
                 }
             }
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     private fun updateUI(user: FirebaseUser?) {

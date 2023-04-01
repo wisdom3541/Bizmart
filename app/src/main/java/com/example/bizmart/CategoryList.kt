@@ -116,7 +116,7 @@ class CategoryList : AppCompatActivity() {
             }
 
             if (filteredList.isEmpty()){
-                Toast.makeText(this, "No Business found....", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Sorry...No Business found!!", Toast.LENGTH_SHORT).show()
             }else{
 
                 adapter.setFilteredList(filteredList)
