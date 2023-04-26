@@ -1,10 +1,13 @@
 package com.example.bizmart
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.d
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +35,9 @@ class CategoryList : AppCompatActivity() {
     private lateinit var list: ArrayList<Data3>
     private lateinit var image: StorageReference
     private lateinit var dataImg : Bitmap
+    private lateinit var filteredList : ArrayList<Data3>
     private lateinit var back : ImageButton
+    private lateinit var progressBar: ProgressBar
     lateinit var category: String
     lateinit var searchBox : SearchView
     private val storageRef = Firebase.storage.reference
@@ -45,13 +50,18 @@ class CategoryList : AppCompatActivity() {
 
         // this creates a vertical layout Manager
 
+        //initializing var
         recyclerview = findViewById(R.id.categoryList_recyclerView)
         loadingPage = findViewById(R.id.loadingPage)
         searchBox = findViewById(R.id.search)
+        progressBar = findViewById(R.id.progressBar)
 
         back = findViewById(R.id.back)
+        filteredList = ArrayList<Data3>()
 
         recyclerview.layoutManager = LinearLayoutManager(this)
+
+
 
         category = intent?.extras?.getString(TITLE).toString()
         val title = findViewById<TextView>(R.id.title)
@@ -62,18 +72,6 @@ class CategoryList : AppCompatActivity() {
         // ArrayList of class ItemsViewModel
         data = ArrayList<Data3>()
 
-        // This loop will create the default category views
-//        for (i in 1..10) {
-//            data.add(
-//                data2(
-//                    R.drawable.photography_img,
-//                    "Bizmart",
-//                    "An E-directory for Products and Sercvices",
-//                    3F
-//                )
-//            )
-//        }
-
         // This will pass the ArrayList to our Adapter
         adapter = CategoryListAdapter(data)
 
@@ -82,7 +80,12 @@ class CategoryList : AppCompatActivity() {
         loadingPage.visibility = View.VISIBLE
 
 
-        getData()
+        if (category == "search" ){
+            getSearchData()
+        }else{
+            getData(category)
+        }
+
 
        back.setOnClickListener{ onBackPressed() }
 
@@ -95,6 +98,8 @@ class CategoryList : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                filteredList.clear()
+                adapter.setFilteredList(filteredList)
                 filterText(newText)
                 return true
             }
@@ -106,8 +111,9 @@ class CategoryList : AppCompatActivity() {
     private fun filterText(query: String?) {
 
         if(query != null){
-            val filteredList = ArrayList<Data3>()
+
             for (i in list){
+               // Log.d("list value:", i.text)
 
                 if (i.text.lowercase(Locale.ROOT).contains(query)){
                     filteredList.add(i)
@@ -115,6 +121,7 @@ class CategoryList : AppCompatActivity() {
 
             }
 
+            Log.d("list value:", filteredList.toString())
             if (filteredList.isEmpty()){
                 Toast.makeText(this, "Sorry...No Business found!!", Toast.LENGTH_SHORT).show()
             }else{
@@ -125,7 +132,8 @@ class CategoryList : AppCompatActivity() {
 
     }
 
-    private fun getData() {
+    //getting data per category
+    private fun getData(category: String) {
 
         val ref = db.collection("bizmart").document("categories")
             .collection(category.lowercase().filter { !it.isWhitespace() })
@@ -133,6 +141,7 @@ class CategoryList : AppCompatActivity() {
 
         ref.get()
             .addOnSuccessListener { result ->
+
                 for (doc in result) {
                     val id = doc.id
 
@@ -173,6 +182,7 @@ class CategoryList : AppCompatActivity() {
                                     data.addAll(list)
                                     adapter.notifyDataSetChanged()
                                     loadingPage.visibility = View.GONE
+                                    progressBar.visibility = View.GONE
                                 }.addOnFailureListener {
                                     Log.d("Tag E: ", it.toString())
                                     // Handle any errors
@@ -199,6 +209,24 @@ class CategoryList : AppCompatActivity() {
 //        Category = db.collection("bizmart").document("categories")
 //            .collection(category.lowercase().filter { !it.isWhitespace() })
 //        Log.d("idTAG", "category: $Category")
+    }
+
+    private fun getSearchData(){
+        progressBar.visibility = View.VISIBLE
+
+        val searchList = arrayOf("Food","Travel","Fashion","Photography","Technology",
+        "Agriculture","Real Estate","Finance","Sport","Insurance"
+            )
+
+
+        for (i in searchList){
+            println(i)
+            getData(i)
+        }
+
+
+
+
     }
 
     companion object {

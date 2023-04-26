@@ -83,6 +83,13 @@ class Signup : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Success", "createUserWithEmail:success")
+
+                    Toast.makeText(this, "SignUp successful", Toast.LENGTH_LONG).show()
+                    val bar =
+                        Snackbar.make(binding.root, "Signup successful", Snackbar.LENGTH_LONG)
+                    bar.setBackgroundTint(Color.GREEN)
+                    bar.show()
+
                     val user = auth.currentUser
                     updateUI(user)
                     Log.d("User", user.toString())

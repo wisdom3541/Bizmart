@@ -67,7 +67,12 @@ class AddBusiness : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 bar.setBackgroundTint(Color.RED)
                 bar.show()
 
-            } else {
+            }else if (des.text.toString().length > 200) {
+
+
+
+            }else
+             {
                 val id = name.text.toString().lowercase().filter { !it.isWhitespace() }
                 val name = name.text.toString()
                 val category = selectedCategory

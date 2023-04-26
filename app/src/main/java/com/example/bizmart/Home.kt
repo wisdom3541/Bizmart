@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -34,6 +35,7 @@ class Home : Fragment(R.layout.home_page) {
     private val storageRef = Firebase.storage.reference
     private lateinit var img : ImageView
     val oneMb: Long = 1024 * 1024
+    lateinit var searchBox : SearchView
     private lateinit var image: StorageReference
     private lateinit var dataImg : Bitmap
 
@@ -47,6 +49,16 @@ class Home : Fragment(R.layout.home_page) {
 
         img= view.findViewById<ImageView>(R.id.loading)
         img.visibility= View.VISIBLE
+
+        searchBox = view.findViewById(R.id.search)
+
+        //searchBox clicked
+        searchBox.setOnClickListener{
+            val intent = Intent(context,CategoryList::class.java)
+            intent.putExtra("category", "search")
+            startActivity(intent)
+        }
+
 
         //back pressed handler
         requireActivity()

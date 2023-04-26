@@ -1,12 +1,14 @@
 package com.example.bizmart
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bizmart.databinding.SigninBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -51,6 +53,12 @@ class SignIn : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG", "signInWithEmail:success")
+
+                    Toast.makeText(this ,"SignIn successful", Toast.LENGTH_LONG ).show()
+                    val bar =
+                        Snackbar.make(binding.root, "SignIn successful", Snackbar.LENGTH_LONG)
+                    bar.setBackgroundTint(Color.GREEN)
+                    bar.show()
                     val user = auth.currentUser
                     updateUI(user)
 
