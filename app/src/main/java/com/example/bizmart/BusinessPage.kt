@@ -229,15 +229,20 @@ class BusinessPage : AppCompatActivity() {
             val result = quotesApi.reposList(fAddy)
             if (result != null) {
                 // Checking the results
+                println("adresss $fAddy, $result" )
 
-                val value : Values? =  result.body()?.results?.get(0)
-                lat = value?.geometry?.location?.lat!!
-                lng = value.geometry.location.lng
+                println("Values " + result.body()?.results)
 
-                Log.d(
-                    "Size: ", value.toString() + lat + lng
+                //google api requires payment....so i disabled the map function
 
-                )
+//                //val value : Values? =  result.body()?.results?.get(0)
+//                lat = value?.geometry?.location?.lat!!
+//                lng = value.geometry.location.lng
+//
+//                Log.d(
+//                    "Size: ", value.toString() + lat + lng
+
+       //         )
             }
 
         }
